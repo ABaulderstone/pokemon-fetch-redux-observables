@@ -13,9 +13,9 @@ import { FETCH_POKEMON } from "./../actions/types";
 
 const fetchPokemonEpic = action$ => action$.pipe(
     ofType(FETCH_POKEMON),
-    mergeMap(() =>
+    mergeMap((action) =>
         ajax.getJSON("https://pokeapi.co/api/v2/pokemon/?limit=150").pipe(
-          map(response =>  fetchPokemonSuccess(response)),
+          map(response =>  fetchPokemonSuccess(response.results)),
           catchError(err => fetchPokemonFailure(err.message))
         )
       )

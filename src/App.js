@@ -1,6 +1,7 @@
 import React from 'react'; 
 import {fetchPokemon}  from "./actions"
 import {connect} from 'react-redux';
+import PokemonTable from './PokemonTable'
 
 
 class App extends React.Component {  
@@ -13,14 +14,9 @@ class App extends React.Component {
     return (
         <>
         {isLoading && <h2> Getting Pokemon </h2>}
-        <ul>
-        {!isLoading && !error && pokemon.length > 0 &&
-        pokemon.map( pokemon => (
-            <li>
-                {pokemon.name}
-            </li>
-        ))}
-        </ul>
+    
+        {!isLoading && !error && pokemon.length > 0 && <PokemonTable pokemon={pokemon} />}
+        
         {error && <h2> {error} </h2>}
         </>
        

@@ -2,18 +2,31 @@ import React from 'react';
 import {fetchPokemon}  from "./actions"
 import {connect} from 'react-redux';
 
+
 class App extends React.Component {  
-   render() {
+   componentDidMount() {
+    this.props.fetchPokemon();
+   }
+    render() {
        const {fetchPokemon, error, isLoading, pokemon} = this.props;
+       console.log(pokemon);
     return (
-        <div className= "App" >
-        <button onClick={fetchPokemon}>Get OG Pokemon </button>
+        <>
         {isLoading && <h2> Getting Pokemon </h2>}
-        {!isLoading && !error && pokemon.length > 0 && <h2>Got Pokemon</h2>}
+        <ul>
+        {!isLoading && !error && pokemon.length > 0 &&
+        pokemon.map( pokemon => (
+            <li>
+                {pokemon.name}
+            </li>
+        ))}
+        </ul>
         {error && <h2> {error} </h2>}
+        </>
+       
 
 
-    </div>
+   
     )
    }
    

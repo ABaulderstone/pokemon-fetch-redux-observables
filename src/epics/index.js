@@ -1,11 +1,9 @@
 import { combineEpics, ofType } from "redux-observable";
 
-import { Observable} from "rxjs";
-import "rxjs/add/operator/switchMap";
-import "rxjs/add/operator/map";
+import { Observable, of} from "rxjs";
+
 import { mergeMap, map, catchError } from 'rxjs/operators';
-import "rxjs/add/observable/of";
-import "rxjs/add/operator/catch";
+
 import { ajax } from "rxjs/observable/dom/ajax";
 
 import { fetchPokemonSuccess, fetchPokemonFailure } from "./../actions/";
@@ -16,7 +14,7 @@ const fetchPokemonEpic = action$ => action$.pipe(
     mergeMap((action) =>
         ajax.getJSON("https://pokeapi.co/api/v2/pokemon/?limit=150").pipe(
           map(response =>  fetchPokemonSuccess(response.results)),
-          catchError(err => fetchPokemonFailure(err.message))
+          catchError(err => of(fetchPokemonFailure(err.message)))
         )
       )
   );
